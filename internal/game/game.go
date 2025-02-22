@@ -5,11 +5,25 @@ import (
 )
 
 const (
-	screenWidth  = 1400
-	screenHeight = 800
+	screenWidth       = 1400
+	screenHeight      = 800
+	playerSize        = 25
+	obstacleSize      = 40
+	numberOfObstacles = 6
 )
 
 type Game struct {
+	Arena   *Arena
+	Players []*Player
+}
+
+var game *Game
+
+// init initializes the game.
+func init() {
+	game = &Game{}
+	game.newArena()
+	game.newPlayer()
 }
 
 // Update updates a game by one tick. The given argument represents a screen image.
@@ -31,7 +45,10 @@ func (g *Game) Layout(outsideWidth, outsideHEight int) (int, int) {
 //
 // The frequency of Draw calls depends on the user's environment, especially the monitors refresh rate.
 // For portability, you should not put your game logic in Draw in general.
-func (g *Game) Draw(screen *ebiten.Image) {}
+func (g *Game) Draw(screen *ebiten.Image) {
+	g.drawPlayers(screen)
+	g.drawArena(screen)
+}
 
 // Run creates and initializes the game config,
 // then starts the game.
@@ -40,8 +57,7 @@ func (g *Game) Draw(screen *ebiten.Image) {}
 func Run() error {
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Shooter")
-	g := &Game{}
-	if err := ebiten.RunGame(g); err != nil {
+	if err := ebiten.RunGame(game); err != nil {
 		return err
 	}
 	return nil
