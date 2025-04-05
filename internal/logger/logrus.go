@@ -15,7 +15,7 @@ func init() {
 	log.SetLevel(logrus.InfoLevel)
 
 	// set the log file
-	file, err := os.OpenFile("game.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err == nil {
 		log.SetOutput(file)
 	} else {
@@ -25,15 +25,15 @@ func init() {
 
 // Fatal is a wrapper of the logrus fatal method
 func Fatal(args ...interface{}) {
-	log.Fatal(args)
+	log.Fatal(args...)
 }
 
 // Warn is a wrapper of the logrus warn method
 func Warn(args ...interface{}) {
-	log.Warn(args)
+	log.Warn(args...)
 }
 
 // Info is a wrapper of the logrus info method
 func Info(args ...interface{}) {
-	log.Info(args)
+	log.Info(args...)
 }
